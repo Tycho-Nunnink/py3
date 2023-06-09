@@ -13,12 +13,14 @@ Typ:
 typ hier: """
 
 keuze = [1,2,3]
-pauze = False
 
 lijstje = {} #zodat vs code geen error geeft
 file = open("lijstje.txt","r")
 exec("lijstje = "+file.read())
 file.close()
+
+def pauze():
+    input("Druk enter om door te gaan")
 
 def enkelprint(printer):
     print(printer)
@@ -29,7 +31,7 @@ def lijtjefunction(lijst):
     for i in lijst:
         print("•Een "+i+" voor €"+lijst[i])
     print("•---------------------------------------------------------•")
-    return True
+    pauze()
 
 def add(functkeuze, lijst):
     if functkeuze[1] not in lijst:
@@ -67,38 +69,36 @@ def boodschappenfunction(lijst):
         elif boodschappenkeuze != "klaar":
             enkelprint("dat bestaat niet!")
     print("\ndat wordt dan €"+str(boodschappenwaarde))
-    return True
+    pauze()
 
 def save(lijst):
     file = open("lijstje.txt","w")
     file.write(str(lijst))
     file.close()
 
+
 while keuze[0] != "afsluiten":
     keuze = input(menu).lower().split(" ")
 
     if keuze[0] == "lijst":
-        pauze = lijtjefunction(lijstje)
+        lijtjefunction(lijstje)
     
     elif keuze[0] == "voegtoe" and len(keuze ) > 2:
-        pauze = add(keuze, lijstje)
+        add(keuze, lijstje)
     
     elif keuze[0] == "wijzig" and len(keuze ) > 2:
-        pauze = change(keuze, lijstje)
+        change(keuze, lijstje)
     
     elif keuze[0] == "verwijder" and len(keuze ) > 1:
-        pauze = delete(keuze, lijstje)
+        delete(keuze, lijstje)
     
     elif keuze[0] == "boodschappen":
-        pauze = boodschappenfunction(lijstje)
+        boodschappenfunction(lijstje)
     
     elif keuze[0] == "opslaan":#save
         save(lijstje)
     
     elif keuze[0] != "afsluiten":#error
         enkelprint("kies een optie")
-    
-    if pauze:
-        input("Druk enter om door te gaan")
-        pauze = False
+
 enkelprint("fijne dag verder!")
